@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Démonstration DevOps Modulaire : FastAPI, Nginx, Kubernetes & CI/CD
 
 Ce dépôt contient le code source, les manifestes Kubernetes et les pipelines CI/CD permettant de démontrer **le découplage applicatif et le déploiement indépendant de modules** sur un cluster Kubernetes.
