@@ -1,39 +1,43 @@
 stages:
-  - deploy
+- deploy
 
 variables:
-  NAMESPACE: "demo-app"
-  KUBECONFIG: "/etc/gitlab-runner/kubeconfig"
+NAMESPACE: "demo-app"
+KUBECONFIG: "/etc/gitlab-runner/kubeconfig"
 
 deploy_backend:
-  stage: deploy
-  rules:
-    - changes:
-        - ./**/*
-      when: always
-    - when: manual
-      allow_failure: true
-  script:
-    - |
-      echo "Mise à jour isolée de api-backend..."
-      sed -i 's|image: demo-backend:.*|image: demo-backend:v2.0|' ./backend.yaml
-      sed -i 's/value: "v1.0"/value: "v2.0"/' ./backend.yaml
-      kubectl apply -f ./backend.yaml -n "$NAMESPACE"
-      kubectl rollout status deployment/api-backend -n "$NAMESPACE"
-      kubectl get pods -n "$NAMESPACE" -l app=api-backend -o wide
+stage: deploy
+tags:
+- k8s-local
+rules:
+- changes:
+    - backend.yaml
+  when: always
+- when: manual
+  allow_failure: true
+script:
+- |
+  echo "Mise à jour isolée de api-backend..."
+  sed -i 's|image: demo-backend:.*|image: demo-backend:v2.0|' ./backend.yaml
+  sed -i 's/value: "v1.0"/value: "v2.0"/' ./backend.yaml
+  kubectl apply -f ./backend.yaml -n "$NAMESPACE"
+  kubectl rollout status deployment/api-backend -n "$NAMESPACE"
+  kubectl get pods -n "$NAMESPACE" -l app=api-backend -o wide
 
 deploy_frontend:
-  stage: deploy
-  rules:
-    - changes:
-        - ./**/*
-      when: always
-    - when: manual
-      allow_failure: true
-  script:
-    - |
-      echo "Mise à jour isolée de frontend..."
-      sed -i 's/image: demo-frontend:.*/image: demo-frontend:v2.0/' ./frontend.yaml
-      kubectl apply -f ./frontend.yaml -n "$NAMESPACE"
-      kubectl rollout status deployment/frontend -n "$NAMESPACE"
-      kubectl get pods -n "$NAMESPACE" -l app=frontend -o wide
+stage: deploy
+tags:
+- k8s-local
+rules:
+- changes:
+    - frontend.yaml
+  when: always
+- when: manual
+  allow_failure: true
+script:
+- |
+  echo "Mise à jour isolée de frontend..."
+  sed -i 's/image: demo-frontend:.*/image: demo-frontend:v2.0/' ./frontend.yaml
+  kubectl apply -f ./frontend.yaml -n "$NAMESPACE"
+  kubectl rollout status deployment/frontend -n "$NAMESPACE"
+  kubectl get pods -n "$NAMESPACE" -l app=frontend -o wide
