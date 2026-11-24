@@ -37,3 +37,4 @@ deploy_frontend:
       kubectl apply -f frontend/frontend.yaml -n "$NAMESPACE"
       kubectl rollout status deployment/frontend -n "$NAMESPACE"
       kubectl get pods -n "$NAMESPACE" -l app=frontend -o wide
+      
