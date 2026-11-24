@@ -3,7 +3,7 @@ stages:
 
 variables:
   NAMESPACE: "demo-app"
-  KUBECONFIG: "/etc/gitlab-runner/kubeconfig"
+  KUBECONFIG: "/home/gitlab-runner/kubeconfig"
 
 deploy_backend:
   stage: deploy
