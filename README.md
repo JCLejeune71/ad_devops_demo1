@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Démonstration DevOps Modulaire : FastAPI, Nginx, Kubernetes & CI/CD
 =======
 # ad_devops_demo1
@@ -132,6 +133,8 @@ For open source projects, say how it is licensed.
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
 =======
+=======
+>>>>>>> 0c58f52 (Readme update)
 # Démonstration DevOps Modulaire : FastAPI, Nginx, Kubernetes & CI/CD
 
 Ce dépôt contient le code source, les manifestes Kubernetes et les pipelines CI/CD permettant de démontrer **le découplage applicatif et le déploiement indépendant de modules** sur un cluster Kubernetes.

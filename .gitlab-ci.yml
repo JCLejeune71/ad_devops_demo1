@@ -14,12 +14,13 @@ deploy_backend:
     - when: manual
       allow_failure: true
   script:
-    - echo "Mise à jour isolée de api-backend..."
-    - sed -i 's/image: demo-backend:.*/image: demo-backend:v2.0/' backend/backend.yaml
-    - sed -i 's/value: "v1.0"/value: "v2.0"/' backend/backend.yaml
-    - kubectl apply -f backend/backend.yaml -n "$NAMESPACE"
-    - kubectl rollout status deployment/api-backend -n "$NAMESPACE"
-    - kubectl get pods -n "$NAMESPACE" -l app=api-backend -o wide
+    - |
+      echo "Mise à jour isolée de api-backend..."
+      sed -i 's|image: demo-backend:.*|image: demo-backend:v2.0|' backend/backend.yaml
+      sed -i 's/value: "v1.0"/value: "v2.0"/' backend/backend.yaml
+      kubectl apply -f backend/backend.yaml -n "$NAMESPACE"
+      kubectl rollout status deployment/api-backend -n "$NAMESPACE"
+      kubectl get pods -n "$NAMESPACE" -l app=api-backend -o wide
 
 deploy_frontend:
   stage: deploy
@@ -30,8 +31,9 @@ deploy_frontend:
     - when: manual
       allow_failure: true
   script:
-    - echo "Mise à jour isolée de frontend..."
-    - sed -i 's/image: demo-frontend:.*/image: demo-frontend:v2.0/' frontend/frontend.yaml
-    - kubectl apply -f frontend/frontend.yaml -n "$NAMESPACE"
-    - kubectl rollout status deployment/frontend -n "$NAMESPACE"
-    - kubectl get pods -n "$NAMESPACE" -l app=frontend -o wide
+    - |
+      echo "Mise à jour isolée de frontend..."
+      sed -i 's/image: demo-frontend:.*/image: demo-frontend:v2.0/' frontend/frontend.yaml
+      kubectl apply -f frontend/frontend.yaml -n "$NAMESPACE"
+      kubectl rollout status deployment/frontend -n "$NAMESPACE"
+      kubectl get pods -n "$NAMESPACE" -l app=frontend -o wide
