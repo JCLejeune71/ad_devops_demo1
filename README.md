@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Démonstration DevOps Modulaire : FastAPI, Nginx, Kubernetes & CI/CD
 =======
 # ad_devops_demo1
->>>>>>> 0f20356 (Initial commit)
 
 Ce dépôt contient le code source, les manifestes Kubernetes et les pipelines CI/CD permettant de démontrer **le découplage applicatif et le déploiement indépendant de modules** sur un cluster Kubernetes.
 
