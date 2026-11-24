@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Démo DevOps — Isolation des modules</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; background: #f5f7fa; color: #1f2937; }
+    .grid { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .card { background: #fff; border: 1px solid #d1d5db; border-radius: 8px; padding: 1.25rem; min-width: 280px; }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; background: #e0f2fe; color: #0369a1; font-weight: bold; }
+    pre { background: #111827; color: #e5e7eb; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <h1>Démo DevOps — Mise à jour isolée d'un module</h1>
+  <div class="grid">
+    <div class="card">
+      <h2>Frontend</h2>
+      <p>Version : <span class="badge" id="fe-version">__FE_VERSION__</span></p>
+      <p>Déployé par : <strong id="fe-deployer">__FE_DEPLOYED_BY__</strong></p>
+    </div>
+    <div class="card">
+      <h2>Backend (FastAPI)</h2>
+      <p>Version : <span class="badge" id="be-version">chargement...</span></p>
+      <p>Pod backend : <code id="be-pod">-</code></p>
+      <pre id="be-raw">En attente de /api/info...</pre>
+    </div>
+  </div>
+
+  <script>
+    async function refreshBackend() {
+      try {
+        const res = await fetch("/api/info", { cache: "no-store" });
+        const data = await res.json();
+        document.getElementById("be-version").textContent = data.version;
+        document.getElementById("be-pod").textContent = data.pod;
+        document.getElementById("be-raw").textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("be-raw").textContent = "Erreur /api/info : " + err;
+      }
+    }
+    refreshBackend();
+    setInterval(refreshBackend, 2000);
+  </script>
+</body>
+</html>
